@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="/WEB-INF/layout/template.xhtml"
+>
+	<!-- Meta Init. -->
+    <ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{editPizzaAction.pizzaId}"></f:viewParam>
+			<f:viewAction action="#{editPizzaAction.init()}" />
+			<f:viewAction action="#{pizzaHome.init()}" />
+		</f:metadata>
+	</ui:define>
+	
+    <ui:define name="content">
+	    <h4 class="mt-5">Aktuelle Pizzabestellungen</h4>
+	
+		<!-- Auflistung Pizzabestellungen. -->
+		<div class="row">
+			<ui:repeat var="pizza" value="#{pizzaHome.pizzas}">
+                <div class="col-md-4 col-xs-12">
+                
+                	<!-- Pizzabestellung. -->
+                    <div class="card" >
+                    	
+                    	<!-- Header. -->
+                        <div class="card-header">
+                        	<h5 class="mb-0 pb-0">
+                            	#{pizza.name}
+                            </h5>
+                        </div>
+                        
+                        <!-- Body. -->
+                        <div class="card-body">
+                            <ul class="list-group">
+                            
+                            	<!-- Größe. -->
+								<li class="list-group-item">
+									<small class="d-block text-muted">Größe</small>
+									<p class="mb-0" style="font-weight: bold">#{pizza.groesse}</p>
+								</li>
+								
+								<!-- Besteller. -->
+								<li class="list-group-item">
+									<small class="d-block text-muted">Besteller</small>
+									<p class="mb-0" style="font-weight: bold">#{pizza.besteller}</p>
+								</li>
+								
+								<!-- Adresse. -->
+								<li class="list-group-item">
+									<small class="d-block text-muted">Adresse</small>
+									<p class="mb-0" style="font-weight: bold">#{pizza.adresse}</p>
+								</li>
+								
+								<!-- Anmerkungen. -->
+								<li class="list-group-item">
+									<small class="d-block text-muted">Anmerkungen</small>
+									<p class="mb-0" style="font-weight: bold">#{pizza.anmerkungen}</p>
+								</li>
+							</ul>
+							
+							<!-- Löschen. -->
+							<div class="mt-2">
+								<h:form>
+						        	<h:commandButton class="w-100 btn btn-danger" value="Löschen" action="#{pizzaHome.deletePizza(pizza.id)}"/>
+						        </h:form>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </ui:repeat>
+        </div>
+	
+	
+		<h4 class="mt-5">Neue Bestellung aufgeben</h4>		
+		<div class="card bg-dark">
+			<div class="card-body">
+				<h:form>
+				
+					<!-- Sorte. -->
+					<div class="form-group mb-2">
+						<label class="text-light" for="inputSorte">Sorte</label>
+						<h:inputText value="#{editPizzaAction.pizza.name}" type="text" class="form-control" id="inputSorte" required="true" />
+					</div>
+					
+					<!-- Größe. -->
+					<div class="form-group mb-2">
+						<label class="text-light" for="inputGroesse">Größe</label>
+						<h:inputText value="#{editPizzaAction.pizza.groesse}" type="text" class="form-control" id="inputGroesse" required="true" />
+					</div>
+					
+					<!-- Besteller. -->
+					<div class="form-group mb-2">
+						<label class="text-light" for="inputBesteller">Besteller</label>
+						<h:inputText value="#{editPizzaAction.pizza.besteller}" type="text" class="form-control" id="inputBesteller" required="true" />
+					</div>
+					
+					<!-- Lieferadresse. -->
+					<div class="form-group mb-2">
+						<label class="text-light" for="inputAdresse">Lieferadresse</label>
+						<h:inputText value="#{editPizzaAction.pizza.adresse}" type="text" class="form-control" id="inputAdresse" required="true" />
+					</div>
+					
+					<!-- Anmerkungen. -->
+					<div class="form-group mb-4">
+						<label class="text-light" for="inputAnmerkungen">Anmerkungen</label>
+						<h:inputText value="#{editPizzaAction.pizza.anmerkungen}" type="text" class="form-control" id="inputAnmerkungen" />
+					</div>
+				    
+				   	<!-- Submit. -->
+			        <h:commandButton value="Bestellung Absenden" class="w-100 btn btn-primary" action="#{editPizzaAction.save()}"/>
+				</h:form>
+			</div>
+		</div>
+
+    </ui:define>
+</ui:composition>
